@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -20,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.alibaba.fastjson.JSON;
@@ -32,7 +35,7 @@ import com.pm.service.JokeService;
 @Controller
 @RequestMapping("joke")
 public class JokeController {
-	@Autowired
+	@Resource
 	private JokeService jokeService;
 	
 	//请求地址设置
@@ -42,14 +45,15 @@ public class JokeController {
     //请求头部设置
     Map<String, String> headers = new HashMap<String, String>();
 	
+    //查询所有笑话
 	@RequestMapping("list")
-	public String findAll(Model model) {
+	@ResponseBody
+	public String findAll() {
 		insertJoke();
-		List<Joke> users=jokeService.findAll();
-		System.out.println(users.toString());
-		//model.addAttribute("users", users);
-		System.out.println("jokes:"+JSON.toJSONString(users));
-		return JSON.toJSONString(users);
+		List<Joke> jokes=jokeService.findAll();
+		System.out.println(jokes.toString());
+		System.out.println("jokes:"+JSON.toJSONString(jokes));
+		return JSON.toJSONString(jokes);
 	}
 	
 	public void insertJoke() {

@@ -12,7 +12,7 @@ import com.pm.entity.User;
 
 @Service
 public class UserService {
-	@Autowired
+	@Resource
 	private UserMapper userMapper;
 	
 	public List<User> findAll(){

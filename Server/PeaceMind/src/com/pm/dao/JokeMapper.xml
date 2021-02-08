@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pm.dao.JokeMapper">
+	<select id="findAll" resultType="com.pm.entity.Joke">
+		select * from table_laugh
+	</select>
+	
+	<select id="findJokeById" resultType="com.pm.entity.Joke">
+		select * from table_laugh where laugh_id = #{id}
+	</select>
+	
+	<insert id="insertJoke" parameterType="com.pm.entity.Joke">
+		insert into table_laugh(laugh_id,laugh_content) values(#{laugh_id},#{laugh_content})
+	</insert>
+</mapper>

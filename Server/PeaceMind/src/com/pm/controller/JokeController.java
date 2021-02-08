@@ -46,7 +46,7 @@ public class JokeController {
     Map<String, String> headers = new HashMap<String, String>();
 	
     //查询所有笑话
-	@RequestMapping("list")
+	@RequestMapping(value="list",produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String findAll() {
 		insertJoke();

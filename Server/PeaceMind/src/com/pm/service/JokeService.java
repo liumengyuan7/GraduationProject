@@ -16,8 +16,8 @@ public class JokeService {
 	@Resource
 	private JokeMapper mapper;
 	
-	public List<Joke> findAll(){
-		return mapper.findAll();
+	public List<Joke> findAll(int pagenum,int pagesize){
+		return mapper.findAll(pagenum, pagesize);
 	}
 	
 	public Joke findJokeById(Integer jokeId) {
@@ -26,5 +26,9 @@ public class JokeService {
 	
 	public int insertJoke(Joke joke) {
 		return mapper.insertJoke(joke);
+	}
+	
+	public int countAllJokes() {
+		return this.mapper.countAllJokes();
 	}
 }

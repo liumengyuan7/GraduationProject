@@ -4,7 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pm.dao.JokeMapper">
 	<select id="findAll" resultType="com.pm.entity.Joke">
-		select * from table_laugh
+		select * from table_laugh limit (pagenum - 1)*pagesize,pagesize
+	</select>
+	
+	<select id="countAllJokes" resultType="java.util.Integer">
+		select count(1) from table_laugh 
 	</select>
 	
 	<select id="findJokeById" resultType="com.pm.entity.Joke">

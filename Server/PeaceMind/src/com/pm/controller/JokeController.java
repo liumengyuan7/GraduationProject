@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
@@ -48,12 +49,17 @@ public class JokeController {
     //查询所有笑话
 	@RequestMapping(value="list",produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String findAll() {
+	public String findAll(@RequestParam("pagenum") int pagenum,
+			@RequestParam("pagesize") int pagesize) {
+		int count = this.jokeService.countAllJokes();
 		insertJoke();
-		List<Joke> jokes=jokeService.findAll();
+		List<Joke> jokes=jokeService.findAll(pagenum,pagesize);
+		Map map = new HashMap<>();
+		map.put("jokes", jokes);
+		map.put("count", count);
 		System.out.println(jokes.toString());
 		System.out.println("jokes:"+JSON.toJSONString(jokes));
-		return JSON.toJSONString(jokes);
+		return JSON.toJSONString(map);
 	}
 	
 	public void insertJoke() {

@@ -46,8 +46,8 @@ public class JokeController {
     //请求头部设置
     Map<String, String> headers = new HashMap<String, String>();
 	
-    //查询所有笑话
-	@RequestMapping(value="list",produces = "text/html;charset=UTF-8")
+    //分页查询笑话
+	@RequestMapping(value="listByPage",produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String findAll(@RequestParam("pagenum") int pagenum,
 			@RequestParam("pagesize") int pagesize) {
@@ -60,6 +60,17 @@ public class JokeController {
 		System.out.println(jokes.toString());
 		System.out.println("jokes:"+JSON.toJSONString(jokes));
 		return JSON.toJSONString(map);
+	}
+	
+	//查询所有笑话
+	@RequestMapping(value="list",produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String findAll() {
+		insertJoke();
+		List<Joke> jokes=jokeService.findAllJokes();
+		System.out.println(jokes.toString());
+		System.out.println("jokes:"+JSON.toJSONString(jokes));
+		return JSON.toJSONString(jokes);
 	}
 	
 	public void insertJoke() {

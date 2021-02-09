@@ -14,4 +14,6 @@ public interface JokeMapper {
 	public int insertJoke(Joke joke);
 	
 	public int countAllJokes();
+
+	public List<Joke> findAllJokes();
 }

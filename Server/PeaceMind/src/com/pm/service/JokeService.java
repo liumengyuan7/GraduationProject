@@ -31,4 +31,8 @@ public class JokeService {
 	public int countAllJokes() {
 		return this.mapper.countAllJokes();
 	}
+
+	public List<Joke> findAllJokes() {
+		return this.mapper.findAllJokes();
+	}
 }

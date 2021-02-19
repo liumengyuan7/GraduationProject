@@ -16,4 +16,6 @@ public interface JokeMapper {
 	public int countAllJokes();
 
 	public List<Joke> findAllJokes();
+	
+	public int updateZanNumByJoke(@Param("jokeId") int jokeId,@Param("zanNum") int zanNum);
 }

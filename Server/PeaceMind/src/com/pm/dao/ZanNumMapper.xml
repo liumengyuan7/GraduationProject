@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pm.dao.ZanNumMapper">
+	<select id="getZanByJokeId">
+        select count(*)
+        from table_give
+        where laugh_id = #{jokeId}
+    </select>
+    
+    <insert id="insertZan">
+        insert into table_give(laugh_id, user_id)
+        values (#{jokeId},#{userId})
+    </insert>
+    
+    <delete id="deleteZan">
+        delete from table_give
+        where  laugh_id = #{jokeId} and user_id = #{userId}
+    </delete>
+</mapper>

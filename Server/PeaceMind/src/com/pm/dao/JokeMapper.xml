@@ -20,6 +20,13 @@
 	</select>
 	
 	<insert id="insertJoke" parameterType="com.pm.entity.Joke">
-		insert into table_laugh(laugh_id,laugh_content) values(#{laugh_id},#{laugh_content})
+		insert into table_laugh(laugh_id,laugh_content,laugh_zan) 
+		values(#{laugh_id},#{laugh_content},#{laugh_zan})
 	</insert>
+	
+	<update id="updateZanNumByJoke">
+        update table_laugh
+        set laugh_zan = #{zanNum}
+        where id = #{jokeId}
+    </update>
 </mapper>

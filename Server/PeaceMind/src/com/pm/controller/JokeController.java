@@ -97,6 +97,7 @@ public class JokeController {
             		Joke joke = new Joke();
             		joke.setLaugh_id(object.getInteger("id"));
             		joke.setLaugh_content(object.getString("content"));
+            		joke.setLaugh_zan(0);
             		System.out.println("joke:"+joke.toString());
             		Joke joke2 = jokeService.findJokeById(joke.getLaugh_id());
             		if (joke2 == null) {
@@ -204,4 +205,35 @@ public class JokeController {
           }
           return null;
       }
+      /**
+       * 对笑话进行点赞
+       * @param jokeId 笑话id
+       * @param userId 用户id
+       * @param zanNumAfter 当前点赞总数
+       * @return 返回true操作成功，false操作失败
+       */
+      @ResponseBody
+	  @RequestMapping("/addZanNum")
+      public  String addZanNum(@RequestParam("jokeId") int jokeId,
+                       @RequestParam("userId") int userId,
+                       @RequestParam("zanNumAfter") int zanNumAfter){
+    	  String result = this.jokeService.addZanNumByJoke(jokeId,userId,zanNumAfter);
+    	  return result;
+      }	
+	  
+      /**
+       * 对笑话取消点赞
+       * @param jokeId 笑话id
+       * @param userId 用户id
+       * @param zanNumAfter 当前点赞总数
+       * @return true操作成功，false操作失败
+       */
+	   @ResponseBody
+	   @RequestMapping("/decZanNum")
+	  public  String decZanNum(@RequestParam("jokeId") int jokeId,
+	                       @RequestParam("userId") int userId,
+	                       @RequestParam("zanNumAfter") int zanNumAfter){
+	      String result = this.jokeService.decZanNumByJoke(jokeId,userId,zanNumAfter);
+	      return result;
+	  }
 }

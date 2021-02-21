@@ -205,8 +205,9 @@ public class JokeController {
           }
           return null;
       }
+      
       /**
-       * 对笑话进行点赞
+       	* 对笑话进行点赞
        * @param jokeId 笑话id
        * @param userId 用户id
        * @param zanNumAfter 当前点赞总数
@@ -222,7 +223,7 @@ public class JokeController {
       }	
 	  
       /**
-       * 对笑话取消点赞
+        * 对笑话取消点赞
        * @param jokeId 笑话id
        * @param userId 用户id
        * @param zanNumAfter 当前点赞总数
@@ -236,4 +237,16 @@ public class JokeController {
 	      String result = this.jokeService.decZanNumByJoke(jokeId,userId,zanNumAfter);
 	      return result;
 	  }
+	  
+	   /**
+	    * 根据点赞情况返回一条笑话
+	    * @return
+	    */
+	   @ResponseBody
+	   @RequestMapping(value="findJokeByZan",produces = "text/html;charset=UTF-8")
+	   public String findJokeByZan() {
+		   Joke joke = this.jokeService.findJokeByZanTop();
+		   return JSON.toJSONString(joke);
+	   }
+	  
 }

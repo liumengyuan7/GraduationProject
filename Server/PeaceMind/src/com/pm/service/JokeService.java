@@ -16,14 +16,18 @@ import com.pm.entity.User;
 public class JokeService {
 	@Resource
 	private JokeMapper mapper;
-	@Autowired
+	@Resource
 	private ZanNumMapper zanNumMapper;
+	
+	public List<Joke> findAllJokes() {
+		return this.mapper.findAllJokes();
+	}
 	
 	public List<Joke> findAll(int pagenum,int pagesize){
 		return mapper.findAll(pagenum, pagesize);
 	}
 	
-	public Joke findJokeById(Integer jokeId) {
+	public Joke findJokeById(int jokeId) {
 		return mapper.findJokeById(jokeId);
 	}
 	
@@ -35,10 +39,6 @@ public class JokeService {
 		return this.mapper.countAllJokes();
 	}
 
-	public List<Joke> findAllJokes() {
-		return this.mapper.findAllJokes();
-	}
-	
 	//对笑话进行点赞
 	public String addZanNumByJoke(int jokeId, int userId, int zanNumAfter){
         int n =this.zanNumMapper.insertZan(jokeId,userId);
@@ -50,7 +50,8 @@ public class JokeService {
             return "false";
         }
     }
-    //对笑话取消点赞
+	
+	//对笑话取消点赞
     public String decZanNumByJoke(int jokeId, int userId, int zanNumAfter){
         int n =this.zanNumMapper.delZan(jokeId,userId);
         if(n>0){
@@ -61,4 +62,9 @@ public class JokeService {
             return "false";
         }
     }
+    
+    //根据点赞情况返回一条笑话
+    public Joke findJokeByZanTop() {
+		return this.mapper.findJokeByZanTop();
+	}
 }

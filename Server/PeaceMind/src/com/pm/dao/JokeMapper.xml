@@ -3,16 +3,16 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pm.dao.JokeMapper">
-	<select id="findAll" resultType="com.pm.entity.Joke">
-		select * from table_laugh limit (pagenum - 1)*pagesize,pagesize
-	</select>
-	
 	<select id="findAllJokes" resultType="com.pm.entity.Joke">
 		select * from table_laugh
 	</select>
 	
-	<select id="countAllJokes" resultType="java.util.Integer">
-		select count(1) from table_laugh 
+	<select id="findAll" resultType="com.pm.entity.Joke">
+		select * from table_laugh limit (pagenum - 1)*pagesize,pagesize
+	</select>
+	
+	<select id="countAllJokes">
+		select count(*) from table_laugh 
 	</select>
 	
 	<select id="findJokeById" resultType="com.pm.entity.Joke">
@@ -28,5 +28,10 @@
         update table_laugh
         set laugh_zan = #{zanNum}
         where id = #{jokeId}
-    </update>
+    </update> 
+    
+    <select id="findJokeByZanTop" resultType="com.pm.entity.Joke">
+    	select * from table_laugh order by laugh_zan desc limit 0,1
+    
+    </select>
 </mapper>

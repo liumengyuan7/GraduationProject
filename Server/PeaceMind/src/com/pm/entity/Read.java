@@ -5,9 +5,10 @@ public class Read {
 	private String uniquekey;//调用api返回的新闻特定key
 	private String auther_name;//作者名称
 	//top(头条 默认)shehui(社会),guonei(国内),guoji(国际),yule(娱乐),tiyu(体育)junshi(军事),keji(科技),caijing(财经),shishang(时尚)
+	private String type;
 	private String category;//新闻类型
 	private String url;//新闻链接
-	private String title;
+	private String title;//新闻标题
 	private Integer read_zan;
 	private Integer read_commentNum;
 	
@@ -59,11 +60,18 @@ public class Read {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 	@Override
 	public String toString() {
-		return "Read [id=" + id + ", uniquekey=" + uniquekey + ", auther_name=" + auther_name + ", category=" + category
-				+ ", url=" + url + ", title=" + title + ", read_zan=" + read_zan + ", read_commentNum="
-				+ read_commentNum + "]";
+		return "Read [id=" + id + ", uniquekey=" + uniquekey + ", auther_name=" + auther_name + ", type=" + type
+				+ ", category=" + category + ", url=" + url + ", title=" + title + ", read_zan=" + read_zan
+				+ ", read_commentNum=" + read_commentNum + "]";
 	}
 	
 	

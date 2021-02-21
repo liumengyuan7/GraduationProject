@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -35,16 +36,56 @@ public class ReadController {
     //申请新闻接口的请求key
     public static final String KEY = "ccd8293f1c594288fe512f3f824e4edc";
 	
-	//查询所有笑话
-	@RequestMapping(value="list",produces = "text/html;charset=UTF-8")
+    //查询所有新闻
+    @RequestMapping(value="allRead",produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String findAll() {
-		insertRead(2,"");
-		List<Read> reads = this.readService.findAll();
+    	List<Read> list = this.readService.findAll();
+    	return JSON.toJSONString(list);
+    }
+    
+	//查询某一类型新闻
+	@RequestMapping(value="list",produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String findReadByType(@RequestParam("type") String type) {
+		insertRead(3,type);
+		List<Read> reads = this.readService.findReadByType(type);
 		System.out.println(reads.toString());
 		System.out.println("reads:"+JSON.toJSONString(reads));
 		return JSON.toJSONString(reads);
 	}
+	
+		/**
+	   	* 对新闻进行点赞
+	   * @param readId 新闻id
+	   * @param userId 用户id
+	   * @param zanNumAfter 当前点赞总数
+	   * @return 返回true操作成功，false操作失败
+	   */
+	  @ResponseBody
+	  @RequestMapping("/addZanNum")
+	  public  String addZanNum(@RequestParam("readId") int readId,
+	                   @RequestParam("userId") int userId,
+	                   @RequestParam("zanNumAfter") int zanNumAfter){
+		  String result = this.readService.addZanNumByRead(readId,userId,zanNumAfter);
+		  return result;
+	  }	
+	  
+	  /**
+	    * 对新闻取消点赞
+	   * @param readId 新闻id
+	   * @param userId 用户id
+	   * @param zanNumAfter 当前点赞总数
+	   * @return true操作成功，false操作失败
+	   */
+	   @ResponseBody
+	   @RequestMapping("/decZanNum")
+	  public  String decZanNum(@RequestParam("readId") int readId,
+	                       @RequestParam("userId") int userId,
+	                       @RequestParam("zanNumAfter") int zanNumAfter){
+	      String result = this.readService.decZanNumByRead(readId,userId,zanNumAfter);
+	      return result;
+	  }
 
 	private void insertRead(int pageSize,String type) {
 		//发送http请求的url
@@ -62,9 +103,11 @@ public class ReadController {
             		System.out.println("jsonObject:"+object);
             		Read read = new Read();
             		read.setUniquekey(object.getString("uniquekey"));
-            		read.setAuther_name(object.getString("auther_name"));
+            		read.setAuther_name(object.getString("author_name"));
             		read.setCategory(object.getString("category"));
+            		read.setType(type);
             		read.setRead_commentNum(0);
+            		read.setRead_zan(0);
             		read.setTitle(object.getString("title"));
             		read.setUrl(object.getString("url"));
             		

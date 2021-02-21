@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pm.dao.ReadMapper">
+	<insert id="insertRead" parameterType="com.pm.entity.Read">
+		insert into table_read(uniquekey,auther_name,type,category,title,url,read_zan) 
+		values(#{uniquekey},#{auther_name},#{type},#{category},#{title},#{url},#{read_zan})
+	</insert>
+	
+	<select id="findAllRead" resultType="com.pm.entity.Read">
+		select * from table_read
+	</select>
+	
+	<select id="findReadByType" resultType="com.pm.entity.Read">
+		select * from table_read where type = #{type}
+	</select>
+	
+	<select id="findReadByUniqueKey" resultType="com.pm.entity.Read">
+		select * from table_read where uniquekey = #{uniquekey}
+	</select>
+	
+	<update id="updateZanNumByRead">
+        update table_read
+        set read_zan = #{zanNum}
+        where id = #{read}
+    </update> 
+</mapper>

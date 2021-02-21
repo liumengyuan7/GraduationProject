@@ -29,6 +29,7 @@ public class Joke {
 	public void setLaugh_zan(Integer laugh_zan) {
 		this.laugh_zan = laugh_zan;
 	}
+	
 	@Override
 	public String toString() {
 		return "Joke [id=" + id + ", laugh_id=" + laugh_id + ", laugh_content=" + laugh_content + ", laugh_zan="

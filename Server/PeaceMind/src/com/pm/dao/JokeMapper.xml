@@ -3,8 +3,16 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pm.dao.JokeMapper">
-	<select id="findAll" resultType="com.pm.entity.Joke">
+	<select id="findAllJokes" resultType="com.pm.entity.Joke">
 		select * from table_laugh
+	</select>
+	
+	<select id="findAll" resultType="com.pm.entity.Joke">
+		select * from table_laugh limit (pagenum - 1)*pagesize,pagesize
+	</select>
+	
+	<select id="countAllJokes">
+		select count(*) from table_laugh 
 	</select>
 	
 	<select id="findJokeById" resultType="com.pm.entity.Joke">
@@ -12,6 +20,18 @@
 	</select>
 	
 	<insert id="insertJoke" parameterType="com.pm.entity.Joke">
-		insert into table_laugh(laugh_id,laugh_content) values(#{laugh_id},#{laugh_content})
+		insert into table_laugh(laugh_id,laugh_content,laugh_zan) 
+		values(#{laugh_id},#{laugh_content},#{laugh_zan})
 	</insert>
+	
+	<update id="updateZanNumByJoke">
+        update table_laugh
+        set laugh_zan = #{zanNum}
+        where id = #{jokeId}
+    </update> 
+    
+    <select id="findJokeByZanTop" resultType="com.pm.entity.Joke">
+    	select * from table_laugh order by laugh_zan desc limit 0,1
+    
+    </select>
 </mapper>

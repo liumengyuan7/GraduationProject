@@ -1,7 +1,3 @@
-<<<<<<< .mine
 eclipse.preferences.version=1
 encoding/<project>=UTF-8
-=======
-eclipse.preferences.version=1
-encoding//src/com/pm/service/JokeService.java=UTF-8
->>>>>>> .theirs
+

@@ -87,42 +87,42 @@
                 app:srcCompat="@drawable/ic_close_eyes" />
         </FrameLayout>
 
-        <FrameLayout
-            android:id="@+id/fl_password_second"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp">
+        <!--        <FrameLayout-->
+        <!--            android:id="@+id/fl_password_second"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="12dp">-->
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center_vertical"
-                android:tint="?attr/colorAccent"
-                app:srcCompat="@drawable/ic_password" />
+        <!--            <androidx.appcompat.widget.AppCompatImageView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_gravity="start|center_vertical"-->
+        <!--                android:tint="?attr/colorAccent"-->
+        <!--                app:srcCompat="@drawable/ic_password" />-->
 
-            <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
-                android:id="@+id/et_password_second"
-                android:inputType="textPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
-                android:hint="@string/hint_please_input_password_reset"
-                app:met_clearButton="false"
-                app:met_errorMessage="@string/tip_password_error"
-                app:met_floatingLabel="normal"
-                app:met_floatingLabelText="@string/title_password"
-                app:met_maxCharacters="18"
-                app:met_regexp="@string/regex_password" />
+        <!--            <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText-->
+        <!--                android:id="@+id/et_password_second"-->
+        <!--                android:inputType="textPassword"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="36dp"-->
+        <!--                android:hint="@string/hint_please_input_password_reset"-->
+        <!--                app:met_clearButton="false"-->
+        <!--                app:met_errorMessage="@string/tip_password_error"-->
+        <!--                app:met_floatingLabel="normal"-->
+        <!--                app:met_floatingLabelText="@string/title_password"-->
+        <!--                app:met_maxCharacters="18"-->
+        <!--                app:met_regexp="@string/regex_password" />-->
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btn_eyes_second"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                app:srcCompat="@drawable/ic_close_eyes" />
-        </FrameLayout>
+        <!--            <androidx.appcompat.widget.AppCompatImageView-->
+        <!--                android:id="@+id/btn_eyes_second"-->
+        <!--                android:layout_width="20dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_gravity="end"-->
+        <!--                android:layout_marginTop="10dp"-->
+        <!--                android:layout_marginRight="10dp"-->
+        <!--                app:srcCompat="@drawable/ic_close_eyes" />-->
+        <!--        </FrameLayout>-->
 
         <FrameLayout
             android:id="@+id/fl_verify_code"

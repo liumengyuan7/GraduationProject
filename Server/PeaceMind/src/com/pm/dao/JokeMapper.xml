@@ -8,10 +8,10 @@
 	</select>
 	
 	<select id="findAll" resultType="com.pm.entity.Joke">
-		select * from table_laugh limit (pagenum - 1)*pagesize,pagesize
+		select * from table_laugh limit #{pagenum},#{pagesize}
 	</select>
 	
-	<select id="countAllJokes">
+	<select id="countAllJokes" resultType="java.lang.Integer">
 		select count(*) from table_laugh 
 	</select>
 	

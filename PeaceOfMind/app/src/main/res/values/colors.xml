@@ -17,8 +17,8 @@
     <color name="initColor">#707070</color>
     <color name="auto_logo">#f3d303</color><!--和logo一样的颜色 -->
     <color name="dark_orange">#ee8a3a</color>
-
-
+    <color name="gray_pressed">#b5b5b6</color>
+    <color name="list_item_desc">#666666</color>
     <color name="app_color_theme_1">#EF5362</color> <!-- Grapefruit -->
     <color name="app_color_theme_2">#FE6D4B</color> <!-- Bittersweet -->
     <color name="app_color_theme_3">#FFCF47</color> <!-- Sunflower -->

@@ -53,7 +53,9 @@ public class JokeController {
 			@RequestParam("pagesize") int pagesize) {
 		int count = this.jokeService.countAllJokes();
 		insertJoke();
-		List<Joke> jokes=jokeService.findAll(pagenum,pagesize);
+		int num = (pagenum-1)*pagesize;
+		int num2 = pagenum*pagesize;
+		List<Joke> jokes=jokeService.findAll(num,num2);
 		Map map = new HashMap<>();
 		map.put("jokes", jokes);
 		map.put("count", count);

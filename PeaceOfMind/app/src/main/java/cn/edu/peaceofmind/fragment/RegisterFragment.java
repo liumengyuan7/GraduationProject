@@ -19,7 +19,6 @@ import com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.edu.peaceofmind.R;
-import cn.edu.peaceofmind.utils.Utils;
 import cn.edu.peaceofmind.utils.XToastUtils;
 
 @Page(anim = CoreAnim.none)
@@ -33,12 +32,12 @@ public class RegisterFragment extends XPageFragment {
     @BindView(R.id.btn_eyes_first)
     ImageView btnEyesFirst;
     boolean isFirstChecked,isSecondChecked = false;
-//    //再次获取密码
-//    @BindView(R.id.et_password_second)
-//    MaterialEditText etPwdSecond;
-//    @BindView(R.id.btn_eyes_second)
-//    ImageView btnEyesSecond;
-//    boolean secondChecked = false;
+    //再次获取密码
+    @BindView(R.id.et_password_second)
+    MaterialEditText etPwdSecond;
+    @BindView(R.id.btn_eyes_second)
+    ImageView btnEyesSecond;
+    boolean secondChecked = false;
     //获取验证码
     @BindView(R.id.et_verify_code)
     MaterialEditText etVerifyCode;
@@ -101,23 +100,23 @@ public class RegisterFragment extends XPageFragment {
                 etPwdFirst.postInvalidate();
             }
         });
-//        btnEyesSecond.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (!isSecondChecked) {
-//                    //如果选中，显示密码
-//                    btnEyesSecond.setImageResource(R.drawable.ic_open_eyes);
-//                    etPwdSecond.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-//                } else {
-//                    //否则隐藏密码
-//                    btnEyesSecond.setImageResource(R.drawable.ic_close_eyes);
-//                    etPwdSecond.setTransformationMethod(PasswordTransformationMethod.getInstance());
-//                }
-//                isSecondChecked = !isSecondChecked;
-//                etPwdSecond.setSelection(etPwdSecond.getText().length());
-//                etPwdSecond.postInvalidate();
-//            }
-//        });
+        btnEyesSecond.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isSecondChecked) {
+                    //如果选中，显示密码
+                    btnEyesSecond.setImageResource(R.drawable.ic_open_eyes);
+                    etPwdSecond.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    //否则隐藏密码
+                    btnEyesSecond.setImageResource(R.drawable.ic_close_eyes);
+                    etPwdSecond.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+                isSecondChecked = !isSecondChecked;
+                etPwdSecond.setSelection(etPwdSecond.getText().length());
+                etPwdSecond.postInvalidate();
+            }
+        });
     }
 
     @OnClick({R.id.btn_get_verify_code, R.id.btn_register, R.id.tv_user_protocol, R.id.tv_privacy_protocol})

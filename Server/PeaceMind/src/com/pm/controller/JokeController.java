@@ -22,7 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
@@ -46,28 +45,12 @@ public class JokeController {
     //请求头部设置
     Map<String, String> headers = new HashMap<String, String>();
 	
-    //分页查询笑话
-	@RequestMapping(value="listByPage",produces = "text/html;charset=UTF-8")
-	@ResponseBody
-	public String findAll(@RequestParam("pagenum") int pagenum,
-			@RequestParam("pagesize") int pagesize) {
-		int count = this.jokeService.countAllJokes();
-		insertJoke();
-		List<Joke> jokes=jokeService.findAll(pagenum,pagesize);
-		Map map = new HashMap<>();
-		map.put("jokes", jokes);
-		map.put("count", count);
-		System.out.println(jokes.toString());
-		System.out.println("jokes:"+JSON.toJSONString(jokes));
-		return JSON.toJSONString(map);
-	}
-	
-	//查询所有笑话
+    //查询所有笑话
 	@RequestMapping(value="list",produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String findAll() {
 		insertJoke();
-		List<Joke> jokes=jokeService.findAllJokes();
+		List<Joke> jokes=jokeService.findAll();
 		System.out.println(jokes.toString());
 		System.out.println("jokes:"+JSON.toJSONString(jokes));
 		return JSON.toJSONString(jokes);
@@ -97,7 +80,6 @@ public class JokeController {
             		Joke joke = new Joke();
             		joke.setLaugh_id(object.getInteger("id"));
             		joke.setLaugh_content(object.getString("content"));
-            		joke.setLaugh_zan(0);
             		System.out.println("joke:"+joke.toString());
             		Joke joke2 = jokeService.findJokeById(joke.getLaugh_id());
             		if (joke2 == null) {
@@ -205,48 +187,4 @@ public class JokeController {
           }
           return null;
       }
-      
-      /**
-       	* 对笑话进行点赞
-       * @param jokeId 笑话id
-       * @param userId 用户id
-       * @param zanNumAfter 当前点赞总数
-       * @return 返回true操作成功，false操作失败
-       */
-      @ResponseBody
-	  @RequestMapping("/addZanNum")
-      public  String addZanNum(@RequestParam("jokeId") int jokeId,
-                       @RequestParam("userId") int userId,
-                       @RequestParam("zanNumAfter") int zanNumAfter){
-    	  String result = this.jokeService.addZanNumByJoke(jokeId,userId,zanNumAfter);
-    	  return result;
-      }	
-	  
-      /**
-        * 对笑话取消点赞
-       * @param jokeId 笑话id
-       * @param userId 用户id
-       * @param zanNumAfter 当前点赞总数
-       * @return true操作成功，false操作失败
-       */
-	   @ResponseBody
-	   @RequestMapping("/decZanNum")
-	  public  String decZanNum(@RequestParam("jokeId") int jokeId,
-	                       @RequestParam("userId") int userId,
-	                       @RequestParam("zanNumAfter") int zanNumAfter){
-	      String result = this.jokeService.decZanNumByJoke(jokeId,userId,zanNumAfter);
-	      return result;
-	  }
-	  
-	   /**
-	    * 根据点赞情况返回一条笑话
-	    * @return
-	    */
-	   @ResponseBody
-	   @RequestMapping(value="findJokeByZan",produces = "text/html;charset=UTF-8")
-	   public String findJokeByZan() {
-		   Joke joke = this.jokeService.findJokeByZanTop();
-		   return JSON.toJSONString(joke);
-	   }
-	  
 }

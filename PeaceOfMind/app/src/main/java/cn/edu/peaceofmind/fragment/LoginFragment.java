@@ -2,11 +2,8 @@ package cn.edu.peaceofmind.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Handler;
-import android.os.Message;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -19,16 +16,10 @@ import com.xuexiang.xui.utils.ThemeUtils;
 import com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText;
 
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.edu.peaceofmind.activity.MainActivity;
 import cn.edu.peaceofmind.R;
-import cn.edu.peaceofmind.entity.LaughInfo;
-import cn.edu.peaceofmind.utils.Utils;
 import cn.edu.peaceofmind.utils.XToastUtils;
 
 @Page(anim = CoreAnim.none)//设置切换进入当前类时无动画
@@ -148,23 +139,4 @@ public class LoginFragment extends XPageFragment {
         Intent intent = new Intent(getActivity(),MainActivity.class);
         startActivity(intent);
     }
-//    private Handler handler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            super.handleMessage(msg);
-//            String result = msg.obj + "";
-//        }
-//    };
-//    //用户登录
-//    public void login(String phoneNumber, String passWord) {
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                String result = new Utils().getConnectionResult("joke","list");
-//                Message message = new Message();
-//                message.obj = result;
-//                handler.sendMessage(message);
-//            }
-//        }.start();
-//    }
 }

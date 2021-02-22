@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pm.dao.NewsMapper">
+	<insert id="insertNews" parameterType="com.pm.entity.News">
+		insert into table_news(uniquekey,auther_name,type,category,title,url,read_zan,picurl) 
+		values(#{uniquekey},#{auther_name},#{type},#{category},#{title},#{url},#{read_zan},#{picurl})
+	</insert>
+	
+	<select id="findAllNews" resultType="com.pm.entity.News">
+		select * from table_news
+	</select>
+	
+	<select id="findNewsByType" resultType="com.pm.entity.News">
+		select * from table_news where type = #{type}
+	</select>
+	
+	<select id="findNewsByUniqueKey" resultType="com.pm.entity.News">
+		select * from table_news where uniquekey = #{uniquekey}
+	</select>
+	
+	<update id="updateZanNumByNews">
+        update table_news
+        set read_zan = #{zanNum}
+        where id = #{newsId}
+    </update> 
+</mapper>

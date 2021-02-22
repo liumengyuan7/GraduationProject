@@ -1,6 +1,6 @@
 package com.pm.entity;
 
-public class Read {
+public class News {
 	private Integer id;
 	private String uniquekey;//调用api返回的新闻特定key
 	private String auther_name;//作者名称
@@ -12,6 +12,7 @@ public class Read {
 	private String title;//新闻标题
 	private Integer read_zan;
 	private Integer read_commentNum;
+	private String picurl;
 	
 	public Integer getId() {
 		return id;
@@ -68,11 +69,17 @@ public class Read {
 		this.type = type;
 	}
 	
+	public String getPicurl() {
+		return picurl;
+	}
+	public void setPicurl(String picurl) {
+		this.picurl = picurl;
+	}
 	@Override
 	public String toString() {
 		return "Read [id=" + id + ", uniquekey=" + uniquekey + ", auther_name=" + auther_name + ", type=" + type
 				+ ", category=" + category + ", url=" + url + ", title=" + title + ", read_zan=" + read_zan
-				+ ", read_commentNum=" + read_commentNum + "]";
+				+ ", read_commentNum=" + read_commentNum + ", picurl=" + picurl + "]";
 	}
 	
 	

@@ -9,7 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import cn.edu.peaceofmind.R;
 import cn.edu.peaceofmind.fragment.LaughFragment;
-import cn.edu.peaceofmind.fragment.NewFragment;
+import cn.edu.peaceofmind.fragment.MainNewsFragment;
 import cn.edu.peaceofmind.fragment.ReadFragment;
 import cn.edu.peaceofmind.fragment.TodayFragment;
 import cn.edu.peaceofmind.utils.XToastUtils;
@@ -89,9 +89,9 @@ public class MainActivity extends XPageActivity implements View.OnClickListener,
         XPageFragment[] fragments = new XPageFragment[]{
                 new ReadFragment(),
                 new LaughFragment(),
-                new NewFragment(),
+//                new NewFragment(),
+                new MainNewsFragment(),
                 new TodayFragment()
-//                new TabLayoutViewPager2Fragment()
         };
         com.xuexiang.xui.adapter.FragmentAdapter<XPageFragment> adapter = new FragmentAdapter<>(getSupportFragmentManager(), fragments);
         viewPager.setOffscreenPageLimit(mTitles.length - 1);
@@ -139,7 +139,7 @@ public class MainActivity extends XPageActivity implements View.OnClickListener,
         toggle.syncState();
         //=================================================
 
-        toolbar.setNavigationIcon(R.mipmap.about_logo);//=====================================
+//        toolbar.setNavigationIcon(R.mipmap.about_logo);//=====================================
         //侧边栏点击事件
         navView.setNavigationItemSelectedListener(menuItem -> {
             if (menuItem.isCheckable()) {

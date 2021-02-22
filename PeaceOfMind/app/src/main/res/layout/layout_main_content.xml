@@ -11,14 +11,21 @@
         android:theme="@style/AppTheme.AppBarOverlay"
         app:elevation="0dp">
 
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/actionBarSize"-->
+<!--            app:popupTheme="@style/AppTheme.PopupOverlay"-->
+<!--            android:background="@color/white"-->
+<!--            app:titleTextColor="?attr/colorAccent" />-->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            android:background="@color/white"
-            app:titleTextColor="?attr/colorAccent" />
-
+            app:titleTextColor="@color/white" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <!--  ViewPager，页面填充页  -->

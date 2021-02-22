@@ -14,7 +14,7 @@
         values (#{jokeId},#{userId})
     </insert>
     
-    <delete id="deleteZan">
+    <delete id="delZan">
         delete from table_give
         where  laugh_id = #{jokeId} and user_id = #{userId}
     </delete>

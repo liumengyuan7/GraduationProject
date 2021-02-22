@@ -91,7 +91,7 @@ public class LaughAdapter extends  RecyclerView.Adapter<LaughAdapter.ViewHolder>
                     holder.ivPraise.setColorFilter(Color.parseColor("#aaaaaa"));
                     int zanNumBefore = laughInfo.getPraise();
                     int zanNumAfter = zanNumBefore-1;
-//                    decZanNumByComment(laughInfo.getLaughId(),userId,zanNumAfter);
+                    decZanNumByComment(laughInfo.getLaughId(),userId,zanNumAfter);
                     laughInfo.setPraise(zanNumAfter);
                     holder.tvPraise.setText(zanNumAfter+"");
                     holder.ivPraise.setTag(false);
@@ -99,7 +99,7 @@ public class LaughAdapter extends  RecyclerView.Adapter<LaughAdapter.ViewHolder>
                     holder.ivPraise.setColorFilter(Color.parseColor("#FF5C5C"));
                     int zanNumBefore = laughInfo.getPraise();
                     int zanNumAfter = zanNumBefore+1;
-//                    addZanNumByComment(laughInfo.getLaughId(),userId,zanNumAfter);
+                    addZanNumByComment(laughInfo.getLaughId(),userId,zanNumAfter);
                     laughInfo.setPraise(zanNumAfter);
                     holder.tvPraise.setText(zanNumAfter+"");
                     holder.ivPraise.setTag(true);
@@ -120,7 +120,7 @@ public class LaughAdapter extends  RecyclerView.Adapter<LaughAdapter.ViewHolder>
             public void run() {
                 Log.e("笑话的id",jokeId+",点赞数"+zanNumAfter);
                 String result = new Utils().getConnectionResult("joke","addZanNum","jokeId="+jokeId
-                        +"&&userId="+userId+"&&zanNumAfter="+zanNumAfter);
+                        +"&userId="+userId+"&zanNumAfter="+zanNumAfter);
                 Message message = new Message();
                 message.obj = result;
                 message.what=0;
@@ -135,7 +135,7 @@ public class LaughAdapter extends  RecyclerView.Adapter<LaughAdapter.ViewHolder>
             public void run() {
                 Log.e("取消点赞笑话的id",jokeId+",点赞数"+zanNumAfter);
                 String result = new Utils().getConnectionResult("joke","decZanNum","jokeId="+jokeId
-                        +"&&userId="+userId+"&&zanNumAfter="+zanNumAfter);
+                        +"&userId="+userId+"&zanNumAfter="+zanNumAfter);
                 Message message = new Message();
                 message.obj = result;
                 message.what=1;

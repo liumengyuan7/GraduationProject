@@ -1,5 +1,8 @@
 package cn.edu.peaceofmind.fragment;
 
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +15,13 @@ import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xui.utils.DensityUtils;
 import com.xuexiang.xui.widget.tabbar.TabSegment;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -20,7 +29,10 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import cn.edu.peaceofmind.R;
+import cn.edu.peaceofmind.adapter.NewsAdapter;
 import cn.edu.peaceofmind.entity.MultiPage;
+import cn.edu.peaceofmind.entity.NewsInfo;
+import cn.edu.peaceofmind.utils.Utils;
 import cn.edu.peaceofmind.utils.XToastUtils;
 
 @Page(anim = CoreAnim.none)
@@ -53,6 +65,7 @@ public class NewFragment extends XPageFragment {
             view.setTag(page);
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             container.addView(view, params);
+
             return view;
         }
 
@@ -92,7 +105,7 @@ public class NewFragment extends XPageFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_news;
+        return R.layout.fragment_new;
     }
 
     @Override
@@ -140,5 +153,46 @@ public class NewFragment extends XPageFragment {
     @Override
     protected void initListeners() {
 
+    }
+    private List<NewsInfo> newsInfoList = new ArrayList<>();
+    private NewsAdapter newsAdapter;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String result = msg.obj + "";
+//            list.clear();
+            try {
+                Log.e("新闻",result);
+                JSONArray jsonArray = new JSONArray(result);
+                for (int i = 0;i<jsonArray.length();i++){
+                    JSONObject json = jsonArray.getJSONObject(i);
+                    NewsInfo newsInfo = new NewsInfo();
+                    newsInfo.setId(json.getInt("id"));
+                    newsInfo.setAuther_name(json.getString("auther_name"));
+                    newsInfo.setCategory(json.getString("category"));
+                    newsInfo.setTitle(json.getString("title"));
+                    newsInfo.setRead_zan(json.getInt("read_zan"));
+                    newsInfo.setUrl(json.getString("url"));
+                    newsInfoList.add(newsInfo);
+                }
+                newsAdapter.notifyDataSetChanged();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+    //根据类别查询新闻
+    public void selectNewsByType(String type) {
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("read","list","type="+type);
+                Message message = new Message();
+                message.obj = result;
+                message.what=0;
+                handler.sendMessage(message);
+            }
+        }.start();
     }
 }

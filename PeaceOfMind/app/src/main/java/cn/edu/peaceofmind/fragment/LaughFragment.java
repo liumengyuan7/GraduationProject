@@ -23,10 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import butterknife.BindView;
@@ -54,6 +51,7 @@ public class LaughFragment extends XPageFragment {
     @BindView(R.id.tv_laugh)
     TextView textView;
     private static int pageNum = 1;
+    boolean mIsShowBack = false;
     /**
      * @return 返回为 null意为不需要导航栏
      */
@@ -80,11 +78,11 @@ public class LaughFragment extends XPageFragment {
         setAnimators();//设置动画
         setCameraDistance();//设置距离
 //        initLaughInfos();//前端测试数据
-        textView.setText("我们都是好孩子，清澈的爱，只为中国。向英雄致敬！你有什么理由不努力呢，岁月静好是因为有人为你负重前行！");
-        //TODO 每次查一页  一次查二十条
+//        textView.setText("我们都是好孩子，清澈的爱，只为中国。向英雄致敬！你有什么理由不努力呢，岁月静好是因为有人为你负重前行！");
+        //每次查一页,一次查二十条
         selectAllJokes(pageNum,20);
-        //TODO 点赞数量最高
-//        laughOneDay();
+        //点赞数量最高
+        laughOneDay();
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         laughAdapter = new LaughAdapter(list);
@@ -94,7 +92,6 @@ public class LaughFragment extends XPageFragment {
     protected void initListeners() {
         //翻转动画监听
         mainFlContainer.setOnClickListener(new View.OnClickListener() {
-            boolean mIsShowBack = false;
             @Override
             public void onClick(View v) {
                 //正面朝上
@@ -116,7 +113,7 @@ public class LaughFragment extends XPageFragment {
         });
         //下拉刷新
         refreshLayout.setOnRefreshListener(refreshLayout -> {
-            // TODO: 2020-02-25 这里只是模拟了网络请求
+            //模拟了网络请求
 //            initLaughInfos();
             pageNum++;
             selectAllJokes(pageNum,20);
@@ -127,7 +124,7 @@ public class LaughFragment extends XPageFragment {
         });
 //        //上拉加载
         refreshLayout.setOnLoadMoreListener(refreshLayout -> {
-            // TODO: 2020-02-25 这里只是模拟了网络请求
+            // 模拟了网络请求
 //            initLaughInfos();
             pageNum++;
             selectAllJokes(pageNum,20);
@@ -175,18 +172,21 @@ public class LaughFragment extends XPageFragment {
                     list.clear();
                     try {
                         Log.e("笑话",result);
-                        JSONArray jsonArray = new JSONArray(result);
+                        JSONObject jsonObject = new JSONObject(result);
+                        JSONArray jsonArray = jsonObject.getJSONArray("jokes");
                         for (int i = 0;i<jsonArray.length();i++){
                             JSONObject json = jsonArray.getJSONObject(i);
                             LaughInfo laughInfo = new LaughInfo();
+                            laughInfo.setLaughId(json.getInt("id"));
                             laughInfo.setSummary(json.getString("laugh_content"));
-                            laughInfo.setPraise(json.getInt("laugh_id"));
+                            laughInfo.setPraise(json.getInt("laugh_zan"));
                             list.add(laughInfo);
                         }
                         laughAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    break;
                 case 1:
                     Log.e("点赞最高数据",result);
                     try {
@@ -206,7 +206,7 @@ public class LaughFragment extends XPageFragment {
             @Override
             public void run() {
                 String result = new Utils().getConnectionResult("joke","listByPage","pagenum="+pagenum
-                        +"&&pagesize="+pagesize);
+                        +"&pagesize="+pagesize);
                 Message message = new Message();
                 message.obj = result;
                 message.what=0;

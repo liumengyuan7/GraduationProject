@@ -34,10 +34,10 @@ public class NewsService {
 	}
 	
 	//对新闻进行点赞
-	public String addZanNumByNews(int readId, int userId, int zanNumAfter){
-        int n =this.zanNumMapper.insertZan(readId,userId);
+	public String addZanNumByNews(int newsId, int userId, int zanNumAfter){
+        int n =this.zanNumMapper.insertZanByNews(newsId, userId);
         if(n>0){
-            int m =this.readMapper.updateZanNumByNews(readId,zanNumAfter);
+            int m =this.readMapper.updateZanNumByNews(newsId,zanNumAfter);
             if(m>0) return "true";
             else return "fasle";
         }else {
@@ -46,10 +46,10 @@ public class NewsService {
     }
 	
 	//对新闻取消点赞
-    public String decZanNumByNews(int readId, int userId, int zanNumAfter){
-        int n =this.zanNumMapper.delZan(readId,userId);
+    public String decZanNumByNews(int newsId, int userId, int zanNumAfter){
+        int n =this.zanNumMapper.delZanByNews(newsId, userId);
         if(n>0){
-            int m =this.readMapper.updateZanNumByNews(readId,zanNumAfter);
+            int m =this.readMapper.updateZanNumByNews(newsId,zanNumAfter);
             if(m>0) return "true";
             else return "fasle";
         }else {

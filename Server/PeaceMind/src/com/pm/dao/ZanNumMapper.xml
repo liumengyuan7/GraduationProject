@@ -18,4 +18,14 @@
         delete from table_give
         where  laugh_id = #{jokeId} and user_id = #{userId}
     </delete>
+    
+    <insert id="insertZanByNews">
+        insert into table_give(news_id, user_id)
+        values (#{newsId},#{userId})
+    </insert>
+    
+    <delete id="delZanByNews">
+        delete from table_give
+        where  news_id = #{newsId} and user_id = #{userId}
+    </delete>
 </mapper>

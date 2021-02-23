@@ -29,7 +29,7 @@ import com.pm.service.NewsService;
 @RequestMapping("news")
 public class NewsController {
 	@Resource
-	private NewsService readService;
+	private NewsService newsService;
 	
 	public static final String URL_News = "http://v.juhe.cn/toutiao/index?key=%s&pagesize=%d&type=%s";
 
@@ -40,7 +40,7 @@ public class NewsController {
     @RequestMapping(value="allNews",produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String findAll() {
-    	List<News> list = this.readService.findAll();
+    	List<News> list = this.newsService.findAll();
     	return JSON.toJSONString(list);
     }
     
@@ -49,7 +49,7 @@ public class NewsController {
 	@ResponseBody
 	public String findReadByType(@RequestParam("type") String type) {
 		insertRead(20,type);
-		List<News> reads = this.readService.findNewsByType(type);
+		List<News> reads = this.newsService.findNewsByType(type);
 		System.out.println(reads.toString());
 		System.out.println("reads:"+JSON.toJSONString(reads));
 		return JSON.toJSONString(reads);
@@ -67,7 +67,7 @@ public class NewsController {
 	  public  String addZanNum(@RequestParam("newsId") int readId,
 	                   @RequestParam("userId") int userId,
 	                   @RequestParam("zanNumAfter") int zanNumAfter){
-		  String result = this.readService.addZanNumByNews(readId,userId,zanNumAfter);
+		  String result = this.newsService.addZanNumByNews(readId,userId,zanNumAfter);
 		  return result;
 	  }	
 	  
@@ -83,7 +83,7 @@ public class NewsController {
 	  public  String decZanNum(@RequestParam("newsId") int readId,
 	                       @RequestParam("userId") int userId,
 	                       @RequestParam("zanNumAfter") int zanNumAfter){
-	      String result = this.readService.decZanNumByNews(readId,userId,zanNumAfter);
+	      String result = this.newsService.decZanNumByNews(readId,userId,zanNumAfter);
 	      return result;
 	  }
 
@@ -113,9 +113,9 @@ public class NewsController {
             		if (object.getString("thumbnail_pic_s") != null) {
 						read.setPicurl(object.getString("thumbnail_pic_s"));
 					}
-            		News read2 = this.readService.findNewsByUniqueKey(read.getUniquekey());
+            		News read2 = this.newsService.findNewsByUniqueKey(read.getUniquekey());
             		if (read2 == null) {
-						int num = this.readService.insertNews(read);
+						int num = this.newsService.insertNews(read);
 						System.out.println("数据插入成功");
 					}
             	}

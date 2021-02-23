@@ -11,5 +11,11 @@ public interface ZanNumMapper {
 		
 	//对笑话取消点赞
 	public int delZan(@Param("jokeId") int jokeId, @Param("userId") int userId);
+	
+	//对新闻进行点赞
+	public int insertZanByNews(@Param("newsId") int newsId, @Param("userId") int userId);
+		
+	//对新闻取消点赞
+	public int delZanByNews(@Param("newsId") int newsId, @Param("userId") int userId);
 
 }

@@ -28,4 +28,14 @@
         delete from table_give
         where  news_id = #{newsId} and user_id = #{userId}
     </delete>
+    
+    <insert id="insertZanByRead">
+        insert into table_give(read_id, user_id)
+        values (#{readId},#{userId})
+    </insert>
+    
+    <delete id="delZanByRead">
+        delete from table_give
+        where  read_id = #{readId} and user_id = #{userId}
+    </delete>
 </mapper>

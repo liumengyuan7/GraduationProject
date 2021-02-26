@@ -13,31 +13,31 @@ import com.pm.entity.News;
 @Service
 public class NewsService {
 	@Resource
-	private NewsMapper readMapper;
+	private NewsMapper newsMapper;
 	@Resource
 	private ZanNumMapper zanNumMapper;
 	
 	public List<News> findAll(){
-		return this.readMapper.findAllNews();
+		return this.newsMapper.findAllNews();
 	}
 	
 	public int insertNews(News read) {
-		return this.readMapper.insertNews(read);
+		return this.newsMapper.insertNews(read);
 	}
 	
 	public News findNewsByUniqueKey(String uniquekey) {
-		return this.readMapper.findNewsByUniqueKey(uniquekey);
+		return this.newsMapper.findNewsByUniqueKey(uniquekey);
 	}
 	
 	public List<News> findNewsByType(String type){
-		return this.readMapper.findNewsByType(type);
+		return this.newsMapper.findNewsByType(type);
 	}
 	
 	//对新闻进行点赞
 	public String addZanNumByNews(int newsId, int userId, int zanNumAfter){
         int n =this.zanNumMapper.insertZanByNews(newsId, userId);
         if(n>0){
-            int m =this.readMapper.updateZanNumByNews(newsId,zanNumAfter);
+            int m =this.newsMapper.updateZanNumByNews(newsId,zanNumAfter);
             if(m>0) return "true";
             else return "fasle";
         }else {
@@ -49,7 +49,7 @@ public class NewsService {
     public String decZanNumByNews(int newsId, int userId, int zanNumAfter){
         int n =this.zanNumMapper.delZanByNews(newsId, userId);
         if(n>0){
-            int m =this.readMapper.updateZanNumByNews(newsId,zanNumAfter);
+            int m =this.newsMapper.updateZanNumByNews(newsId,zanNumAfter);
             if(m>0) return "true";
             else return "fasle";
         }else {

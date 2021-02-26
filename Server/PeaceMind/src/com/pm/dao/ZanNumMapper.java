@@ -18,4 +18,10 @@ public interface ZanNumMapper {
 	//对新闻取消点赞
 	public int delZanByNews(@Param("newsId") int newsId, @Param("userId") int userId);
 
+	//对文章进行点赞
+	public int insertZanByRead(@Param("readId") int readId, @Param("userId") int userId);
+		
+	//对文章取消点赞
+	public int delZanByRead(@Param("readId") int readId, @Param("userId") int userId);
+
 }

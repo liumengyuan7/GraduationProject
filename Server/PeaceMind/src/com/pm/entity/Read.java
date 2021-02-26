@@ -4,8 +4,11 @@ public class Read {
 	private Integer id;
 	private String read_writer;//文章作者
 	private String read_content;//文章内容
+	private String read_image;
 	private Integer read_zan;
 	private Integer read_commentNum;
+	private String user_nickname;
+
 	
 	public Integer getId() {
 		return id;
@@ -36,6 +39,24 @@ public class Read {
 	}
 	public void setRead_commentNum(Integer read_commentNum) {
 		this.read_commentNum = read_commentNum;
+	}
+	public String getRead_image() {
+		return read_image;
+	}
+	public void setRead_image(String read_image) {
+		this.read_image = read_image;
+	}
+	
+	public String getUser_nickname() {
+		return user_nickname;
+	}
+	public void setUser_nickname(String user_nickname) {
+		this.user_nickname = user_nickname;
+	}
+	@Override
+	public String toString() {
+		return "Read [id=" + id + ", read_writer=" + read_writer + ", read_content=" + read_content + ", read_image="
+				+ read_image + ", read_zan=" + read_zan + ", read_commentNum=" + read_commentNum + "]";
 	}
 	
 	

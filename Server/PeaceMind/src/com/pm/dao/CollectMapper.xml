@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pm.dao.CollectMapper">
+	<insert id="insertCollect">
+        insert into table_collect(read_id, user_id)
+        value (#{readId},#{userId},#{type})
+    </insert>
+    
+    <delete id="deleteCollect">
+        delete from table_collect
+        where read_id=#{readId} and user_id=#{userId}
+    </delete>
+    
+    <select id="findMyCollect" resultType="com.pm.entity.Read">
+    	select u.user_nickname,r.id,r.read_writer,r.read_content,
+    	r.read_image,r.read_zan,r.read_commentNum
+    	from table_collect c
+    	left join table_user u on u.id = c.user_id
+    	left join table_read r on r.id = c.read_id
+    	where c.user_id = #{userId}
+    </select>
+</mapper>

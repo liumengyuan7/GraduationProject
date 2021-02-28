@@ -22,7 +22,6 @@ public class ReadAdapter  extends  RecyclerView.Adapter<ReadAdapter.ViewHolder>{
     private List<ReadInfo> readInfos;
     static final class ViewHolder extends RecyclerView.ViewHolder {//定义用于缓存item布局中子控件对象的类
         ImageView ivPraise;
-        TextView tvSummary;
         TextView tvPraise;
         TextView tvTitle;
         CardView cardView;
@@ -30,7 +29,6 @@ public class ReadAdapter  extends  RecyclerView.Adapter<ReadAdapter.ViewHolder>{
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivPraise = itemView.findViewById(R.id.iv_praise);
-            tvSummary = itemView.findViewById(R.id.tv_summary);
             tvPraise = itemView.findViewById(R.id.tv_praise);
             tvTitle = itemView.findViewById(R.id.tv_title);
             cardView = itemView.findViewById(R.id.card_view);
@@ -58,7 +56,6 @@ public class ReadAdapter  extends  RecyclerView.Adapter<ReadAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ReadInfo readInfo = readInfos.get(position);
-        holder.tvSummary.setText(readInfo.getSummary());
         holder.tvPraise.setText(readInfo.getPraise()+"");
         holder.tvTitle.setText(readInfo.getTitle());
         //点击事件

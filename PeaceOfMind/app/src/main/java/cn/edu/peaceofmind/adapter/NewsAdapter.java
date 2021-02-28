@@ -8,6 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -28,7 +33,7 @@ public class NewsAdapter extends  RecyclerView.Adapter<NewsAdapter.ViewHolder>  
         ImageView ivPraise;
 
 //        TextView tvSummary;
-//        ImageView ivImage;
+        ImageView ivImage;
         TextView tvPraise;
 
 
@@ -38,7 +43,7 @@ public class NewsAdapter extends  RecyclerView.Adapter<NewsAdapter.ViewHolder>  
             tvUserName = itemView.findViewById(R.id.tv_user_name);
             ivPraise = itemView.findViewById(R.id.iv_praise);
 //            tvSummary = itemView.findViewById(R.id.tv_summary);
-//            ivImage = itemView.findViewById(R.id.iv_image);
+            ivImage = itemView.findViewById(R.id.iv_image);
             tvPraise = itemView.findViewById(R.id.tv_praise);
             tvTitle = itemView.findViewById(R.id.tv_title);
             cardView = itemView.findViewById(R.id.card_view);
@@ -67,6 +72,8 @@ public class NewsAdapter extends  RecyclerView.Adapter<NewsAdapter.ViewHolder>  
         holder.tvUserName.setText(newsInfo.getAuther_name());
         holder.tvTitle.setText(newsInfo.getTitle());
         holder.tvPraise.setText(newsInfo.getRead_zan()+"");
+        RequestOptions requestOptions = new RequestOptions().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE);
+        Glide.with(context).load(newsInfo.getPicurl()).apply(requestOptions).into(holder.ivImage);
         //点击事件
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -14,7 +14,7 @@ public class NewsInfo implements Serializable {
     private String title;//新闻标题
     private Integer read_zan;
     private Integer read_commentNum;
-
+    private String picurl;
     public NewsInfo(){
 
     }
@@ -100,6 +100,14 @@ public class NewsInfo implements Serializable {
         this.read_commentNum = read_commentNum;
     }
 
+    public String getPicurl() {
+        return picurl;
+    }
+
+    public void setPicurl(String picurl) {
+        this.picurl = picurl;
+    }
+
     @Override
     public String toString() {
         return "NewsInfo{" +
@@ -112,6 +120,7 @@ public class NewsInfo implements Serializable {
                 ", title='" + title + '\'' +
                 ", read_zan=" + read_zan +
                 ", read_commentNum=" + read_commentNum +
+                ", picurl='" + picurl + '\'' +
                 '}';
     }
 }

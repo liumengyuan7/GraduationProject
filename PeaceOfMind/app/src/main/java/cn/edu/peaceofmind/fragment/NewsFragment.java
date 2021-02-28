@@ -115,6 +115,7 @@ public class NewsFragment extends XPageFragment {
                     newsInfo.setTitle(json.getString("title"));
                     newsInfo.setRead_zan(json.getInt("read_zan"));
                     newsInfo.setUrl(json.getString("url"));
+                    newsInfo.setPicurl(json.getString("picurl"));
                     list.add(newsInfo);
                 }
                 newsAdapter.notifyDataSetChanged();
@@ -128,7 +129,7 @@ public class NewsFragment extends XPageFragment {
         new Thread(){
             @Override
             public void run() {
-                String result = new Utils().getConnectionResult("read","list","type="+type);
+                String result = new Utils().getConnectionResult("news","list","type="+type);
                 Message message = new Message();
                 message.obj = result;
                 handler.sendMessage(message);

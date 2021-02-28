@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pm.dao.ReplyMapper">
+	<select id="queryReplyByCommentId" resultType="com.pm.entity.Reply">
+		select r.comment_id,r.from_id,r.to_id,u.user_nickname from_user_nickname,
+		r.reply_content,r.reply_time
+		from table_replymsg r
+		left join table_user u on u.id = r.from_id
+		left join table_comment c on c.user_id = r.to_id
+		where r.comment_id = #{commentId}
+	</select>
+	
+	<insert id="insertReply">
+		insert into table_replymsg(comment_id, from_id, to_id, reply_content, reply_time)
+		values (#{commentId},#{fromId},#{toId},#{replyContent},#{replyTime})
+	</insert>
+
+</mapper>

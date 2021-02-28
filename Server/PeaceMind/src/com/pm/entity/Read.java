@@ -1,5 +1,8 @@
 package com.pm.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Read {
 	private Integer id;
 	private String read_writer;//文章作者
@@ -8,7 +11,7 @@ public class Read {
 	private Integer read_zan;
 	private Integer read_commentNum;
 	private String user_nickname;
-
+	private List<Comment> comments = new ArrayList<>();
 	
 	public Integer getId() {
 		return id;
@@ -53,10 +56,17 @@ public class Read {
 	public void setUser_nickname(String user_nickname) {
 		this.user_nickname = user_nickname;
 	}
+	public List<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
 	@Override
 	public String toString() {
 		return "Read [id=" + id + ", read_writer=" + read_writer + ", read_content=" + read_content + ", read_image="
-				+ read_image + ", read_zan=" + read_zan + ", read_commentNum=" + read_commentNum + "]";
+				+ read_image + ", read_zan=" + read_zan + ", read_commentNum=" + read_commentNum + ", user_nickname="
+				+ user_nickname + ", comments=" + comments + "]";
 	}
 	
 	

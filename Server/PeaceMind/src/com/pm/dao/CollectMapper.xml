@@ -21,4 +21,8 @@
     	left join table_read r on r.id = c.read_id
     	where c.user_id = #{userId}
     </select>
+    
+    <select id="countCollectNum" resultType="java.lang.Integer">
+    	select count(*) from table_collect where read_id = #{readId}
+    </select>
 </mapper>

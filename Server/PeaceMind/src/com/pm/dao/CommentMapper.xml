@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pm.dao.CommentMapper">
+	<insert id="insertComment">
+		insert into table_comment(read_id,user_id,comment_content,comment_time)
+		value (#{readId},#{userId},#{content},#{contentTime})
+	</insert>
+	
+	<select id="findCommentsByReadId" resultType="com.pm.entity.Comment">
+		select c.id,c.read_id readId,c.user_id commenmtFromId,
+		u.user_nickname commentFromNickname,c.comment_content commentFromContent,
+		c.comment_time commentFromTime
+		from table_comment c
+		left join table_user u on u.id = c.user_id
+		where c.read_id = #{readId}
+	</select>
+</mapper>

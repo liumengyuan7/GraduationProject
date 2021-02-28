@@ -23,10 +23,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.edu.peaceofmind.activity.MainActivity;
 import cn.edu.peaceofmind.R;
+import cn.edu.peaceofmind.utils.Utils;
 import cn.edu.peaceofmind.utils.XToastUtils;
 
 @Page(anim = CoreAnim.none)//设置切换进入当前类时无动画
@@ -40,6 +45,7 @@ public class LoginFragment extends XPageFragment {
     @BindView(R.id.btn_eyes_login)
     ImageView btnEyesLogin;
     boolean isPwdChecked = false;
+    private String md5Pass;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_login;
@@ -101,6 +107,7 @@ public class LoginFragment extends XPageFragment {
                 break;
             case R.id.tv_forget_password:
 //                XToastUtils.info("忘记密码");
+                openPage(ForgetPwdFragment.class);
                 break;
             case R.id.tv_user_protocol:
                 XToastUtils.info("用户协议");
@@ -130,7 +137,7 @@ public class LoginFragment extends XPageFragment {
      */
     private void loginByVerifyCode(String phoneNumber, String passWord) {
         // TODO: 2020/8/29 这里只是界面演示而已
-        onLoginSuccess();
+        login(phoneNumber, passWord);
     }
 
     /**
@@ -146,23 +153,41 @@ public class LoginFragment extends XPageFragment {
         Intent intent = new Intent(getActivity(),MainActivity.class);
         startActivity(intent);
     }
-//    private Handler handler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            super.handleMessage(msg);
-//            String result = msg.obj + "";
-//        }
-//    };
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String result = msg.obj + "";
+            Log.e("登录结果",result);
+            if(result.equals("false")){
+                XToastUtils.error("您的账号或者密码错误，登录失败");
+            }else {
+                //TODO 使用token维持状态
+                //显示Intent跳转Activity
+                Intent intent = new Intent(getActivity(),MainActivity.class);
+                startActivity(intent);
+            }
+        }
+    };
 //    //用户登录
-//    public void login(String phoneNumber, String passWord) {
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                String result = new Utils().getConnectionResult("joke","list");
-//                Message message = new Message();
-//                message.obj = result;
-//                handler.sendMessage(message);
-//            }
-//        }.start();
-//    }
+    public void login(String phoneNumber, String passWord) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(etPassWord.getText().toString().getBytes());
+            md5Pass = new BigInteger(1, md.digest()).toString(18);
+            Log.e("md5",md5Pass);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        new Thread(){
+            @Override
+            public void run() {
+                String result = new Utils().getConnectionResult("user","userLogin","userphone="+phoneNumber
+                                +"&password="+md5Pass);
+                Message message = new Message();
+                message.obj = result;
+                handler.sendMessage(message);
+            }
+        }.start();
+    }
 }

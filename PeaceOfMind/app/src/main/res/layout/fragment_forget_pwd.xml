@@ -15,7 +15,7 @@
     <TextView style="@style/TextStyle.Title"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
-        android:text="注 册"
+        android:text="重置密码"
         android:textSize="22sp" />
     <LinearLayout
         android:layout_width="match_parent"
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:layout_marginStart="36dp"
-                android:hint="@string/hint_please_input_password"
+                android:hint="@string/hint_please_input_password_reset"
                 app:met_clearButton="false"
                 app:met_errorMessage="@string/tip_password_error"
                 app:met_floatingLabel="normal"
@@ -142,7 +142,7 @@
         android:id="@+id/btn_register"
         style="@style/SuperButton.Primary.Login"
         android:layout_marginTop="16dp"
-        android:text="@string/title_register"
+        android:text="@string/title_reset_password"
         android:visibility="gone"/>
 
     <FrameLayout

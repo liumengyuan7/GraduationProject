@@ -3,6 +3,7 @@ package cn.edu.peaceofmind;
 import android.app.Application;
 import android.content.Context;
 
+import com.mob.MobSDK;
 import com.xuexiang.xpage.AppPageConfig;
 import com.xuexiang.xpage.PageConfig;
 import com.xuexiang.xpage.PageConfiguration;
@@ -30,5 +31,6 @@ public class MyApplication extends Application {
                 .setContainActivityClazz(XPageActivity.class) //设置默认的容器Activity
                 .enableWatcher(false)   //设置是否开启内存泄露监测
                 .init(this);            //初始化页面配置
+        MobSDK.init(this);
     }
 }

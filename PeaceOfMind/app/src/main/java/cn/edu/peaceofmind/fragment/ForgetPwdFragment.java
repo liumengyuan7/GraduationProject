@@ -1,20 +1,16 @@
 package cn.edu.peaceofmind.fragment;
 
+
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.XPageFragment;
@@ -29,7 +25,6 @@ import com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Random;
 
 import androidx.annotation.NonNull;
 import butterknife.BindView;
@@ -41,7 +36,7 @@ import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
 @Page(anim = CoreAnim.none)
-public class RegisterFragment extends XPageFragment {
+public class ForgetPwdFragment extends XPageFragment {
     //获取手机号
     @BindView(R.id.et_phone_number)
     MaterialEditText etPhoneNumber;
@@ -56,13 +51,7 @@ public class RegisterFragment extends XPageFragment {
     Button btnRegister;
     @BindView(R.id.btn_verify_code)
     Button btnVerifyCode;
-    boolean isFirstChecked,isSecondChecked = false;
-    //    //再次获取密码
-//    @BindView(R.id.et_password_second)
-//    MaterialEditText etPwdSecond;
-//    @BindView(R.id.btn_eyes_second)
-//    ImageView btnEyesSecond;
-//    boolean secondChecked = false;
+    boolean isChecked = false;
     //获取验证码
     @BindView(R.id.et_verify_code)
     MaterialEditText etVerifyCode;
@@ -74,7 +63,7 @@ public class RegisterFragment extends XPageFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_register;
+        return R.layout.fragment_forget_pwd;
     }
 
     @Override
@@ -91,13 +80,6 @@ public class RegisterFragment extends XPageFragment {
     protected void initViews() {
         mCountDownHelper = new CountDownButtonHelper(btnGetVerifyCode, 60);
 
-        //隐私政策弹窗
-//        if (!SettingUtils.isAgreePrivacy()) {
-//            Utils.showPrivacyDialog(getContext(), (dialog, which) -> {
-//                dialog.dismiss();
-//                SettingUtils.setIsAgreePrivacy(true);
-//            });
-//        }
     }
 
     @Override
@@ -105,7 +87,7 @@ public class RegisterFragment extends XPageFragment {
         btnEyesFirst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isFirstChecked) {
+                if (!isChecked) {
                     //如果选中，显示密码
                     btnEyesFirst.setImageResource(R.drawable.ic_open_eyes);
                     etPwdFirst.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
@@ -114,7 +96,7 @@ public class RegisterFragment extends XPageFragment {
                     btnEyesFirst.setImageResource(R.drawable.ic_close_eyes);
                     etPwdFirst.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
-                isFirstChecked = !isFirstChecked;
+                isChecked = !isChecked;
                 etPwdFirst.setSelection(etPwdFirst.getText().length());
                 etPwdFirst.postInvalidate();
             }
@@ -136,7 +118,7 @@ public class RegisterFragment extends XPageFragment {
             case R.id.btn_register:
                 if (etPhoneNumber.validate()) {
                     if (etPwdFirst.validate()) {
-                        registerByVerifyCode(etPhoneNumber.getEditValue(), etPwdFirst.getEditValue());
+                        updatePwdByVerifyCode(etPhoneNumber.getEditValue(), etPwdFirst.getEditValue());
                     }
                 }
                 break;
@@ -155,7 +137,6 @@ public class RegisterFragment extends XPageFragment {
      * 获取验证码
      */
     private void getVerifyCode(String phoneNumber) {
-        // TODO: 2020/8/29 这里只是界面演示而已
         mCountDownHelper.start();
         // 在尝试读取通信录时以弹窗提示用户（可选功能）
         SMSSDK.setAskPermisionOnReadContact(true);
@@ -167,35 +148,6 @@ public class RegisterFragment extends XPageFragment {
                 msg.arg2 = result;
                 msg.obj = data;
                 Log.e("验证码",data.toString()+",event:"+event+",msg:"+msg.toString());
-//                new Handler(Looper.getMainLooper(), new Handler.Callback() {
-//                    @Override
-//                    public boolean handleMessage(Message msg) {
-//                        int event = msg.arg1;
-//                        int result = msg.arg2;
-//                        Object data = msg.obj;
-//                        Log.e("验证码",data.toString()+",event:"+event+",msg:"+msg.toString());
-//                        if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-//                            if (result == SMSSDK.RESULT_COMPLETE) {
-//                                // TODO 处理成功得到验证码的结果
-//                                Log.e("验证码",data.toString()+",event:"+event+",msg:"+msg);
-//                                // 请注意，此时只是完成了发送验证码的请求，验证码短信还需要几秒钟之后才送达
-//                            } else {
-//                                // TODO 处理错误的结果
-//                                ((Throwable) data).printStackTrace();
-//                            }
-//                        } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-//                            if (result == SMSSDK.RESULT_COMPLETE) {
-//                                // TODO 处理验证码验证通过的结果
-//                                Log.e("验证码",data.toString()+",event:"+event+",msg:"+msg);
-//                            } else {
-//                                // TODO 处理错误的结果
-//                                ((Throwable) data).printStackTrace();
-//                            }
-//                        }
-//                        // TODO 其他接口的返回结果也类似，根据event判断当前数据属于哪个接口
-//                        return false;
-//                    }
-//                }).sendMessage(msg);
                 msgHandler.sendMessage(msg);
             }
         };
@@ -209,7 +161,7 @@ public class RegisterFragment extends XPageFragment {
 //        // 使用完EventHandler需注销，否则可能出现内存泄漏
 //        SMSSDK.unregisterEventHandler(eventHandler);
     }
-//    处理UI线程
+    //    处理UI线程
     private Handler msgHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -217,24 +169,24 @@ public class RegisterFragment extends XPageFragment {
             int result = msg.arg2;
             Object data = msg.obj;
             if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                        if (result == SMSSDK.RESULT_COMPLETE) {
-                            //处理成功得到验证码的结果
-                            XToastUtils.info("验证码已发送");
-                            // 请注意，此时只是完成了发送验证码的请求，验证码短信还需要几秒钟之后才送达
-                        } else {
-                            //处理错误的结果
-                            ((Throwable) data).printStackTrace();
-                            XToastUtils.info("验证失败，请重新获取验证码");
-                        }
-                    } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                 if (result == SMSSDK.RESULT_COMPLETE) {
-                            // TODO 处理验证码验证通过的结果
-                            pwdLayout.setVisibility(View.VISIBLE);btnRegister.setVisibility(View.VISIBLE);
-                            btnVerifyCode.setVisibility(View.GONE);
+                    //处理成功得到验证码的结果
+                    XToastUtils.info("验证码已发送");
+                    // 请注意，此时只是完成了发送验证码的请求，验证码短信还需要几秒钟之后才送达
+                } else {
+                    //处理错误的结果
+                    ((Throwable) data).printStackTrace();
+                    XToastUtils.info("验证失败，请重新获取验证码");
+                }
+            } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    // TODO 处理验证码验证通过的结果
+                    pwdLayout.setVisibility(View.VISIBLE);btnRegister.setVisibility(View.VISIBLE);
+                    btnVerifyCode.setVisibility(View.GONE);
 
-                            Log.e("验证码",data.toString()+",event:"+event+",msg:"+msg);
-                            XToastUtils.info("验证成功");
-                        } else {
+                    Log.e("验证码",data.toString()+",event:"+event+",msg:"+msg);
+                    XToastUtils.info("验证成功");
+                } else {
                     //处理错误的结果
                     XToastUtils.info("验证失败，请重新获取验证码");
                     ((Throwable) data).printStackTrace();
@@ -243,18 +195,18 @@ public class RegisterFragment extends XPageFragment {
         }
     };
     /**
-     * 根据密码注册
+     * 根据手机号修改密码
      *
      * @param phoneNumber 手机号
      * @param passWord 密码
      */
-    private void registerByVerifyCode(String phoneNumber, String passWord) {
+    private void updatePwdByVerifyCode(String phoneNumber, String passWord) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(passWord.getBytes());
             passWord = new BigInteger(1, md.digest()).toString(18);
             Log.e("md5",passWord);
-            userRegister(phoneNumber,passWord, "peaceofmind"+new Random().nextInt());
+            userUpdatePwd(phoneNumber,passWord);
         }catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
@@ -264,7 +216,7 @@ public class RegisterFragment extends XPageFragment {
     /**
      * 注册成功的处理
      */
-    private void onRegisterSuccess() {
+    private void onUpdatePwdSuccess() {
 //        String token = RandomUtils.getRandomNumbersAndLetters(16);
 //        if (TokenUtils.handleLoginSuccess(token)) {
 //            popToBack();//结束当前fragment
@@ -292,28 +244,25 @@ public class RegisterFragment extends XPageFragment {
         @Override
         public void handleMessage(@NonNull Message msg) {
             String result = msg.obj + "";
-            if(result.equals("repeat")){
-                XToastUtils.info("该手机号已经被注册了，换一个吧~");
-            }else if(result.equals("false")){
-                XToastUtils.error("注册失败！");
+            if(result.equals("false")){
+                XToastUtils.error("修改失败！");
             }else{
-                XToastUtils.info("注册成功!");
-                onRegisterSuccess();
+                XToastUtils.info("修改成功，请重新登录！");
+                onUpdatePwdSuccess();
             }
         }
     };
-    //注册
-    public void userRegister(String userPhone,String userPassword,String userNickname) {
+    //重置密码
+    public void userUpdatePwd(String userPhone,String userPassword) {
         new Thread(){
             @Override
             public void run() {
-                String result = new Utils().getConnectionResult("user","userRegister","userPhone="+userPhone
-                +"&userPassword="+userPassword+"&userNickname="+userNickname+"&userSex=男");
+                String result = new Utils().getConnectionResult("user","updatePassword","userPhone="+userPhone
+                        +"&userPassword="+userPassword);
                 Message message = new Message();
                 message.obj = result;
                 handler.sendMessage(message);
             }
         }.start();
     }
-
 }

@@ -16,4 +16,8 @@
 		left join table_user u on u.id = c.user_id
 		where c.read_id = #{readId}
 	</select>
+	
+	<select id="commentNum" resultType="java.lang.Integer">
+    	select count(*) from table_comment where read_id = #{readId}
+    </select>
 </mapper>

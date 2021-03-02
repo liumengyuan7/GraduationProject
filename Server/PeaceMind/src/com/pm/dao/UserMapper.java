@@ -21,4 +21,6 @@ public interface UserMapper {
 	public int updateUserPasswordById(@Param("id")String id, @Param("password")String password);
 
 	public int updateUserNicknameById(@Param("id")String id, @Param("nickname")String nickname);
+	
+	public int updateUserPwdByPhone(@Param("phone")String phone, @Param("password")String password);
 }

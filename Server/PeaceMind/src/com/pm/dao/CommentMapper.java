@@ -12,5 +12,7 @@ public interface CommentMapper {
 			@Param("content") String content,@Param("contentTime") Date contentTime);
 	
 	public List<Comment> findCommentsByReadId(Integer readId); 
+	
+	public int commentNum(Integer readId);
 
 }

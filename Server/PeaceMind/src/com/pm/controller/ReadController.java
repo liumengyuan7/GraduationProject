@@ -2,6 +2,7 @@ package com.pm.controller;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -103,13 +104,8 @@ public class ReadController {
 	@ResponseBody
 	@RequestMapping("/myCollect")
 	public String findMyCollect(@RequestParam("userId")Integer userId) {
-		List<Read> reads = this.readService.findMyCollect(userId);
-		for (int i = 0; i < reads.size(); i++) {
-			Integer readId = reads.get(i).getId();
-			List<Comment> comments = this.readService.findCommentByReadId(readId);
-			reads.get(i).setComments(comments);
-		}
-		return JSON.toJSONString(reads);
+		String result = this.readService.findMyCollect(userId);
+		return result;
 	}
 	
 	/**

@@ -3,7 +3,9 @@ package com.pm.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -40,6 +42,8 @@ public class ReadService {
 		List<Read> reads = this.readMapper.findAll();
 		for (int i = 0; i < reads.size(); i++) {
 			int readId = reads.get(i).getId();
+			int commentNum = this.commentMapper.commentNum(readId);
+			reads.get(i).setRead_commentNum(commentNum);
 			List<Comment> comments = this.commentMapper.findCommentsByReadId(readId);
 			reads.get(i).setComments(comments);
 			for (int j = 0; j < comments.size(); j++) {
@@ -95,9 +99,20 @@ public class ReadService {
 	}
 	
 	//我的收藏
-	public List<Read> findMyCollect(Integer userId) {
+	public String findMyCollect(Integer userId) {
 		List<Read> reads = this.collectMapper.findMyCollect(userId);
-		return reads;
+		int collectNum = this.collectMapper.countMyCollect(userId);
+		for (int i = 0; i < reads.size(); i++) {
+			int readId = reads.get(i).getId();
+			int commentNum = this.commentMapper.commentNum(readId);
+			reads.get(i).setRead_commentNum(commentNum);
+			List<Comment> comments = this.commentMapper.findCommentsByReadId(readId);
+			reads.get(i).setComments(comments);
+		}
+		Map map = new HashMap<>();
+		map.put("reads", reads);
+		map.put("collectNum", collectNum);
+		return JSON.toJSONString(map);
 	}
 	
 	//添加评论

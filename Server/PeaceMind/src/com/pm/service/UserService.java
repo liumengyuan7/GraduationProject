@@ -80,4 +80,14 @@ public class UserService {
 		if(result>0) return true;
 		else return false;
 	}
+	
+	//根据用户手机号修改密码
+	public String updateUserPwdByPhone(String phone,String password) {
+		int result = this.userMapper.updateUserPwdByPhone(phone, password);
+		if (result>0) {
+			return "true";
+		}else {
+			return "false";
+		}
+	}
 }

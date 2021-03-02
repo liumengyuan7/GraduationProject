@@ -25,4 +25,8 @@
     <select id="countCollectNum" resultType="java.lang.Integer">
     	select count(*) from table_collect where read_id = #{readId}
     </select>
+    
+    <select id="countMyCollect" resultType="java.lang.Integer">
+    	select count(*) from table_collect where user_id = #{userId}
+    </select>
 </mapper>

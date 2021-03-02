@@ -9,6 +9,8 @@ public class Read {
 	private String read_content;//文章内容
 	private String read_image;
 	private Integer read_zan;
+	private String read_title;
+	private String read_summary;
 	private Integer read_commentNum;
 	private String user_nickname;
 	private List<Comment> comments = new ArrayList<>();
@@ -62,11 +64,25 @@ public class Read {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
+	
+	public String getRead_title() {
+		return read_title;
+	}
+	public void setRead_title(String read_title) {
+		this.read_title = read_title;
+	}
+	public String getRead_summary() {
+		return read_summary;
+	}
+	public void setRead_summary(String read_summary) {
+		this.read_summary = read_summary;
+	}
 	@Override
 	public String toString() {
 		return "Read [id=" + id + ", read_writer=" + read_writer + ", read_content=" + read_content + ", read_image="
-				+ read_image + ", read_zan=" + read_zan + ", read_commentNum=" + read_commentNum + ", user_nickname="
-				+ user_nickname + ", comments=" + comments + "]";
+				+ read_image + ", read_zan=" + read_zan + ", read_title=" + read_title + ", read_summary="
+				+ read_summary + ", read_commentNum=" + read_commentNum + ", user_nickname=" + user_nickname
+				+ ", comments=" + comments + "]";
 	}
 	
 	

@@ -30,5 +30,9 @@
     <update id="updateUserNicknameById" parameterType="com.pm.entity.User">
         update table_user set user_nickname=#{nickname} where id=#{id}
     </update>
+    
+    <update id="updateUserPwdByPhone" parameterType="com.pm.entity.User">
+        update table_user set user_password=#{password} where user_phone = #{phone}
+    </update>
 	
 </mapper>

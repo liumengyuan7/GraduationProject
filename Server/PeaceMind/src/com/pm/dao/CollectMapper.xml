@@ -15,7 +15,7 @@
     
     <select id="findMyCollect" resultType="com.pm.entity.Read">
     	select u.user_nickname,r.id,r.read_writer,r.read_content,
-    	r.read_image,r.read_zan,r.read_commentNum
+    	r.read_image,r.read_zan,r.read_commentNum,r.read_title,read_summary
     	from table_collect c
     	left join table_user u on u.id = c.user_id
     	left join table_read r on r.id = c.read_id

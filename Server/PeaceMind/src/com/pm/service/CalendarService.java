@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -16,19 +20,45 @@ import com.alibaba.fastjson.JSONObject;
 
 @Service
 public class CalendarService {
-	public static final String URL_News = "http://v.juhe.cn/calendar/day?date=%s&key=%s";
-
+	public static final String URL_Calendar = "http://v.juhe.cn/calendar/day?date=%s&key=%s";
     //申请接口的请求key
-    public static final String KEY = "2ef30b125229bf67d1e976d4dbde5b6e";
+    public static final String KEY_Calendar = "2ef30b125229bf67d1e976d4dbde5b6e";
+    
+    //历史上的今天
+    public static final String URL_HISTORY = "http://v.juhe.cn/todayOnhistory/queryEvent.php?date=%s&key=%s";
+    public static final String KEY_HISTORY = "4c09e0f32bd0c0fb6f719641abfae3c7";
+    
+    //历史上的今天某一事件详情
+    public static final String URL_HISTORYDEYAIL = "http://v.juhe.cn/todayOnhistory/queryDetail.php?e_id=%s&key=%s";
+    
+    //今日天气
+    public static final String URL_WEATHER = "http://apis.juhe.cn/simpleWeather/query?city=%s&key=%s";
+    public static final String KEY_WEATHER = "87a36d495c0d278924b8d6bc3c0d0f70";
+    
+    
+    public String todayWeather(String city) {
+		String result = printJson(city, URL_WEATHER, KEY_WEATHER);
+		return result;
+	}
     
     public String findCalendar(String date) {
-    	String result = printJson(date);
+    	String result = printJson(date,URL_Calendar,KEY_Calendar);
     	return result;
     }
     
-    public static String printJson(String date) {
+    public String historyToday(String date) {
+		String result = printJson(date, URL_HISTORY,KEY_HISTORY);
+		return result;
+	}
+    
+    public String historyTodayDetail(String e_id) {
+		String result = printJson(e_id, URL_HISTORYDEYAIL, KEY_HISTORY);
+		return result;
+	}
+    
+    public static String printJson(String message,String urll,String key) {
         //发送http请求的url
-        String url = String.format(URL_News, date, KEY);
+        String url = String.format(urll, message, key);
         String response = doPost(url);
         System.out.println("接口返回：" + response);
         String result = "";
@@ -37,9 +67,10 @@ public class CalendarService {
             int error_code = (int) jsonObject.get("error_code");
             if (error_code == 0) {
                 System.out.println("调用接口成功");
-                JSONObject object = jsonObject.getJSONObject("result");
-                String data = object.getString("data");
-                System.out.println("data:"+data);
+               // JSONObject object = jsonObject.getJSONObject("result");
+                String data = jsonObject.getString("result");
+                /*String data = dtString.getString("data");
+                System.out.println("data:"+data);*/
                 result = JSON.toJSONString(data);
             } else {
                 System.out.println("调用接口失败：" + jsonObject.getString("reason"));
